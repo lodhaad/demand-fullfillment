@@ -1,4 +1,4 @@
-package com.tradeai.demandfullfillment.input;
+package com.tradeai.demandfullfillment.externalapi;
 
 import lombok.Getter;
 import lombok.Setter;

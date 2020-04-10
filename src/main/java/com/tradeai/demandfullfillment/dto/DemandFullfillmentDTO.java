@@ -22,8 +22,6 @@ public class DemandFullfillmentDTO {
 
 	private String sourceOfDemandHeld;
 
-	//private Timestamp requestTime;
-
 	private String status;
 
 	private String securityId;
