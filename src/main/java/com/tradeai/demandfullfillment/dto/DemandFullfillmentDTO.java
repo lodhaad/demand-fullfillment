@@ -1,5 +1,7 @@
 package com.tradeai.demandfullfillment.dto;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 //import java.sql.Timestamp;
 
@@ -12,11 +14,17 @@ import lombok.Setter;
 
 public class DemandFullfillmentDTO {
 
-	private Integer demandFullfillId;
-
+	
+	private Integer fullfillmentId;
+	
+	
+	private Integer sourceId;
+	
+	private String sourceType;
+		
+	/// for which demand
 	private Integer demandId;
 
-	private Integer positionId;
 
 	private String clientId;
 
@@ -31,5 +39,18 @@ public class DemandFullfillmentDTO {
 	private Date businessDate;
 
 	private Double clientProbablity;
+	
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
+	
+	public void setBusinessDate(String busienssDate) throws ParseException {
+		
+		businessDate = sdf.parse(busienssDate);
+		
+	}
+	
+	public String getBusinessDate() {
+		return sdf.format(businessDate);
+	}
 
 }

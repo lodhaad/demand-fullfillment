@@ -8,21 +8,23 @@ import lombok.Setter;
 
 public class DemandOutput {
 	
-	private Integer batchId;
+	private Integer demandId;
 
-	private Integer postionId;
+	private Integer batchId;
 
 	private String clientId;
 
 	private String securityId;
 
-	private Long quantity;
+	private Integer quantity;
 
 	private String dateOfDemand;
 
 	private String settlementDate;
 
 	private Double clientDemandConversionPercentage;
+
+
 
 
 

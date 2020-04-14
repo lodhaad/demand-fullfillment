@@ -5,6 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
+
 public class OverAllSupplyDTO {
 	
 	private String securityId;
