@@ -31,7 +31,7 @@ private Integer fullfillmentId;
 
 	private Integer quantity;
 
-	private Date businessDate;
+	private String businessDate;
 
 	private Double clientProbablity;
 

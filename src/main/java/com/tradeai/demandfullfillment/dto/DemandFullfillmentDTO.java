@@ -3,7 +3,8 @@ package com.tradeai.demandfullfillment.dto;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-//import java.sql.Timestamp;
+
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -46,6 +47,12 @@ public class DemandFullfillmentDTO {
 	public void setBusinessDate(String busienssDate) throws ParseException {
 		
 		businessDate = sdf.parse(busienssDate);
+		
+	}
+	
+	public void setBusinessDate(java.sql.Date busienssDate) throws ParseException {
+		
+		businessDate = busienssDate;
 		
 	}
 	

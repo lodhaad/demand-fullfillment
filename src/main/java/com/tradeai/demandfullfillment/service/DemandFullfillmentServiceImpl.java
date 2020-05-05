@@ -1,9 +1,11 @@
 package com.tradeai.demandfullfillment.service;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +95,46 @@ public class DemandFullfillmentServiceImpl implements DemandFullfillmentService 
 		}
 
 		return demand;
+	}
+
+	@Override
+	public DemandFullfillmentDTO getFullfilment(String securityId,
+			String clientId,
+			String date) throws ParseException{
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		sdf.setTimeZone(TimeZone.getTimeZone("America/New_York"));
+		
+		///java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+		
+		java.util.Date dateUtil = sdf.parse(date);
+		
+		java.sql.Date sqlDate = new java.sql.Date(dateUtil.getTime());
+		
+
+		DemandFullfillment datamodelObj = repository.findByClientIdAndSecurityIdAndBusinessDateAndStatus(clientId, securityId, sqlDate,"Good");
+		
+		//DemandFullfillment datamodelObj = repository.findByClientIdAndSecurityIdAndStatus(clientId, securityId,"Good");
+		
+
+
+			DemandFullfillmentDTO dto = new DemandFullfillmentDTO();
+			dto.setClientId(clientId);
+			dto.setSecurityId(securityId);
+			dto.setDemandId(datamodelObj.getDemandId());
+			dto.setBusinessDate(datamodelObj.getBusinessDate());
+			dto.setQuantity(datamodelObj.getQuantity());
+			dto.setSourceId(datamodelObj.getSourceId());
+			dto.setFullfillmentId(datamodelObj.getDemandFullfillId());
+			dto.setDemandId(datamodelObj.getDemandId());
+			dto.setStatus(datamodelObj.getStatus());
+			dto.setSourceOfDemandHeld(datamodelObj.getSource());
+			
+
+
+				
+		return dto;
 	}
 
 }

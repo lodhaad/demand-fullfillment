@@ -17,6 +17,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,6 +50,50 @@ public class DemandFullfillmentController {
 	public void processTheFlow() {
 
 	}
+	
+	
+	@GetMapping ("/client/{clientId}/date/{businessDate}")
+	
+	public String getFillBasedOnClientAndDate(@PathVariable String clientId, @PathVariable String businessDate) {
+		
+		return "get fills";
+		
+	}
+	
+	
+@GetMapping ("/client/{clientId}/security/{secId}/date/{businessDate}")
+	
+	public ResponseEntity<DemandFullfillmentOutput> getFillBasedOnClientSecurityAndDate(@PathVariable String clientId, 
+			@PathVariable String businessDate, 
+			@PathVariable String secId
+			) throws ParseException {
+	
+	
+		DemandFullfillmentDTO dto = service.getFullfilment(secId, clientId, businessDate);
+		
+		DemandFullfillmentOutput responseFullfillment = new DemandFullfillmentOutput();
+		
+		responseFullfillment.setClientId(clientId);
+		responseFullfillment.setSecurityId(dto.getSecurityId());
+		responseFullfillment.setBusinessDate(dto.getBusinessDate());
+		responseFullfillment.setQuantity(dto.getQuantity());
+		responseFullfillment.setSourceId(dto.getSourceId());
+		responseFullfillment.setSourceType(dto.getSourceType());
+		responseFullfillment.setSourceOfDemandHeld(dto.getSourceOfDemandHeld());
+		responseFullfillment.setStatus(dto.getStatus());
+		responseFullfillment.setFullfillmentId(dto.getFullfillmentId());
+		responseFullfillment.setSourceType(dto.getSourceOfDemandHeld());
+		responseFullfillment.setDemandId(dto.getDemandId());
+		
+		return new ResponseEntity<DemandFullfillmentOutput>(responseFullfillment, HttpStatus.OK);
+		
+
+
+		
+	}
+
+
+
 
 	@PostMapping("/client/{clientId}/date/{businessDate}")
 	public ResponseEntity<List<DemandFullfillmentOutput>> getDemandForFullFillment(
@@ -255,7 +300,7 @@ public class DemandFullfillmentController {
 	private List<DemandOutput> saveDemandViaRestService(List<DemandInput> demandInput, String clientId,
 			String businessDate) {
 
-		String theUrl = "http://localhost:81/demand/client/" + clientId + "/date/" + businessDate;
+		String theUrl = "http://localhost:91/demand/client/" + clientId + "/date/" + businessDate;
 
 		HttpEntity<List<DemandInput>> requestEntity = new HttpEntity<>(demandInput);
 
@@ -271,7 +316,7 @@ public class DemandFullfillmentController {
 
 	private List<SupplyOutput> getAllSuppliesForStockViaService(String secId, String dateOfDemand) {
 
-		String supplyUrl = "http://localhost:83/supply/security/" + secId + "/date/" + dateOfDemand;
+		String supplyUrl = "http://localhost:93/supply/security/" + secId + "/date/" + dateOfDemand;
 
 		ResponseEntity<List<SupplyOutput>> supplyResponse = template.exchange(supplyUrl, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<SupplyOutput>>() {
@@ -286,7 +331,7 @@ public class DemandFullfillmentController {
 
 	private List<InventoryOutput> getInventoryViaRest(String secId, String dateOfDemand) {
 
-		String inventoryURL = "http://localhost:84/inventory/stock/" + secId + "/date/" + dateOfDemand;
+		String inventoryURL = "http://localhost:94/inventory/stock/" + secId + "/date/" + dateOfDemand;
 
 		ResponseEntity<List<InventoryOutput>> inventoryResp = template.exchange(inventoryURL, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<InventoryOutput>>() {
